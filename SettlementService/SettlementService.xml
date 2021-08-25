@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SettlementService</name>
+    </assembly>
+    <members>
+        <member name="M:SettlementService.Controllers.BookingsController.Create(SettlementService.Dtos.BookingDto)">
+            <summary>
+            Creates a booking
+            </summary>
+            <param name="dto">Booking object, contains the booking start time and representative name. Bookings are for an hour.</param>
+            <response code="200">Booking created</response>
+            <response code="400">Invalid booking time or booking time outside business hours (9am to 5pm)</response>
+            <response code="409">No booking slots available for specified time</response>
+            <response code="500">Unexpected error</response>
+        </member>
+        <member name="P:SettlementService.Dtos.BookingDto.BookingTime">
+            <summary>
+            Start time of Booking
+            </summary>
+            <example>09:00</example>
+        </member>
+        <member name="P:SettlementService.Dtos.BookingDto.Name">
+            <summary>
+            Name of representative placing booking
+            </summary>
+            <example>James</example>
+        </member>
+        <member name="M:SettlementService.Services.BookingSvc.CreateBookingAsync(SettlementService.Dtos.BookingDto)">
+            <summary>
+            Creates a booking if validation is successful.
+            Duplicate booking time and name combinations are considered separate bookings.
+            </summary>
+            <param name="dto">BookingDto object</param>
+            <returns>BookingCreationResult</returns>
+        </member>
+        <member name="M:SettlementService.Services.BookingSvc.GetBookingsAsync">
+            <summary>
+            Returns a list of all existing bookings
+            </summary>
+            <returns>List of Booking objects</returns>
+        </member>
+        <member name="M:SettlementService.Services.BookingSvc.IsWithinBusinessHours(System.DateTime,System.TimeSpan,System.TimeSpan)">
+            <summary>
+            Checks that the specified time lies between the specified min and max booking times
+            </summary>
+            <param name="time">Booking time to check</param>
+            <param name="earliestPossibleBooking">Earliest possible booking time</param>
+            <param name="latestPossibleBooking">Latest possible booking time</param>
+            <returns>
+            true - specified time is within specified range (inclusive)
+            false - specified time is outside specified range
+            </returns>
+        </member>
+        <member name="M:SettlementService.Services.BookingSvc.IsBookingTimeValid(System.String)">
+            <summary>
+            Checks if the specified string is a valid time representation
+            </summary>
+            <param name="time"></param>
+            <returns></returns>
+        </member>
+        <member name="M:SettlementService.Services.BookingSvc.HasBookingSlotAvailableAsync(System.DateTime,System.Int32)">
+            <summary>
+            Checks if any booking slots are available for specified time
+            </summary>
+            <param name="time">Booking start time</param>
+            <param name="maxConcurrentBookings">Max number of booking slots</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
